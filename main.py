@@ -1,16 +1,24 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from aiogram import executor
+from config import dp
+from handlers import (
+    start,
+    call_back
+)
+from database import sql_commands
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+async def on_startup(_):
+    db = sql_commands.Database()
+    db.sql_create_tables()
+    db.sql_create_answer_table()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+start.register_start_handlers(dp=dp)
+call_back.register_callback_handlers(dp=dp)
+
+if __name__ == "__main__":
+    executor.start_polling(
+        dp,
+        skip_updates=True,
+        on_startup=on_startup
+    )
