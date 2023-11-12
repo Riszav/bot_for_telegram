@@ -1,9 +1,10 @@
 import sqlite3
 
 from aiogram import types, Dispatcher
-from config import bot
+from config import bot,DESTINATION
 from database.sql_commands import Database
 from keyboards.inline_buttons import start_keyboard
+from const import START_MENU
 
 
 async def start_button(message: types.Message):
@@ -14,11 +15,19 @@ async def start_button(message: types.Message):
         first_name=message.from_user.first_name,
         last_name=message.from_user.last_name,
     )
-    await bot.send_message(
-        chat_id=message.from_user.id,
-        text=f"Hello {message.from_user.first_name}. Bot beginning a work.",
-        reply_markup=await start_keyboard()
-    )
+    with open(DESTINATION + "\start_ani.gif", 'rb') as animation:
+        await bot.send_animation(
+            chat_id=message.from_user.id,
+            animation=animation,
+            caption=START_MENU.format(user=message.from_user.first_name),
+            reply_markup=await start_keyboard()
+        )
+    # else: if message.chat.id == -1002013774865:
+
+    print(message)
+    # await bot.send_animation(
+    #     chat_id=message.chat
+    # )
 
 
 def register_start_handlers(dp: Dispatcher):
