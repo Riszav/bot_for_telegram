@@ -1,5 +1,6 @@
 import datetime
 import sqlite3
+import time
 
 from aiogram import types, Dispatcher
 from config import bot, DESTINATION
@@ -46,14 +47,21 @@ async def chat_messages(message: types.Message):
                     telegram_id=message.from_user.id
                 )
             elif count >= 3:
-                await bot.ban_chat_member(
+                new = types.ChatPermissions(can_send_messages=False)
+                await message.bot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.from_user.id,
-                    until_date=datetime.datetime.now() + datetime.timedelta(seconds=10)
+                    permissions=new,
+                    until_date=datetime.datetime.now()+datetime.timedelta(seconds=120)
                 )
+                # await bot.ban_chat_member(
+                #     chat_id=message.chat.id,
+                #     user_id=message.from_user.id,
+                #     until_date=datetime.datetime.now() + datetime.timedelta(seconds=10)
+                # )
                 await bot.send_message(
                     chat_id=message.chat.id,
-                    text=f'User {message.from_user.first_name} can`t message this chat 10sec.'
+                    text=f'User {message.from_user.first_name} can`t muted on 10sec.'
                 )
             elif user:
                 db.sql_update_ban_user_count(
