@@ -87,4 +87,4 @@ class Database:
             "count": row[2]
         }
         return self.cursor.execute(
-            sql_queries.SELECT_ALL_USERS_QUERY).fetchall()
+            sql_queries.SELECT_ALL_BAN_USERS_QUERY).fetchall()

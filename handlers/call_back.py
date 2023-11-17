@@ -108,17 +108,28 @@ async def admin_call(message: types.Message):
 async def all_users_stats(call: types.CallbackQuery):
     db = Database()
     print(db.sql_select_all_users())
+    db_data = db.sql_select_all_users()
+    new_data = ''
+    for user in db_data:
+        new_data += f'{user["telegram_id"]}'
+        new_data += f', {user["first_name"]}\n'
     await bot.send_message(
         chat_id=call.from_user.id,
-        text=f"list all users \n{db.sql_select_all_users()}"
+        text=new_data
     )
 
 
 async def ban_list_users_stats(call: types.CallbackQuery):
     db = Database()
+    db_data = db.sql_select_all_ban_users()
+    new_data = ''
+    for user in db_data:
+        new_data += f'{user["telegram_id"]}'
+        new_data += f', {user["count"]}\n'
+        print(user)
     await bot.send_message(
         chat_id=call.from_user.id,
-        text=f"list users in ban list \n{db.sql_select_all_ban_users()}"
+        text=new_data
     )
 
 
