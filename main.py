@@ -3,6 +3,7 @@ from config import dp
 from handlers import (
     start,
     call_back,
+    registration,
     chat_actions
 )
 from database import sql_commands
@@ -11,11 +12,12 @@ from database import sql_commands
 async def on_startup(_):
     db = sql_commands.Database()
     db.sql_create_tables()
-    db.sql_create_answer_table()
+
 
 
 start.register_start_handlers(dp=dp)
 call_back.register_callback_handlers(dp=dp)
+registration.register_registration_handlers(dp=dp)
 chat_actions.register_chat_actions_handlers(dp=dp)
 
 if __name__ == "__main__":
