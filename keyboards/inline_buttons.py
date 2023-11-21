@@ -11,8 +11,23 @@ async def start_keyboard():
         "Registration 👨‍💼",
         callback_data="registration"
     )
+    my_profile_button = InlineKeyboardButton(
+        "My Profile 🐼",
+        callback_data="my_profile"
+    )
+    random_profiles_button = InlineKeyboardButton(
+        "View Profiles 🫶",
+        callback_data="random_profiles"
+    )
+    complain_button = InlineKeyboardButton(
+        "Complain user 🚩",
+        callback_data="complain_profiles"
+    )
     markup.add(questionnaire_button)
     markup.add(registration_button)
+    markup.add(my_profile_button)
+    markup.add(random_profiles_button)
+    markup.add(complain_button)
     return markup
 
 
@@ -52,5 +67,34 @@ async def stats_keyboard():
     )
     markup.add(all_users_stats_button)
     markup.add(ban_list_users_stats_button)
+    return markup
+
+async def like_dislike_keyboard(owner_tg_id):
+    markup = InlineKeyboardMarkup()
+    like_button = InlineKeyboardButton(
+        "Like 👍🏻",
+        callback_data=f"liked_profile_{owner_tg_id}"
+    )
+    dislike_button = InlineKeyboardButton(
+        "Dislike 👎🏻",
+        callback_data="random_profiles"
+    )
+    markup.add(like_button)
+    markup.add(dislike_button)
+    return markup
+
+
+async def my_profile_keyboard():
+    markup = InlineKeyboardMarkup()
+    like_button = InlineKeyboardButton(
+        "Update profile",
+        callback_data=f"update_profile"
+    )
+    dislike_button = InlineKeyboardButton(
+        "Delete profile",
+        callback_data="delete_profiles"
+    )
+    markup.add(like_button)
+    markup.add(dislike_button)
     return markup
 

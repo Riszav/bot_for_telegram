@@ -8,12 +8,4 @@ USER_FORM_TEXT = "Nickname: {nickname}\n" \
                  "Geo-Position: {geo}\n" \
                  "Gender: {gender}\n" \
                  "Age: {age}\n"
-ALL_BAN_USERS=("ID {id}\n"
-               "TELEGRAM_ID {telegram_id}\n"
-               "COUNT {count}")
 
-ALL_USERS=("ID {id}\n"
-               "TELEGRAM_ID {telegram_id}\n"
-               "USERNAME {username}\n"
-               "FIRST_NAME {first_name}\n"
-               "LAST_NAME {last_name}")

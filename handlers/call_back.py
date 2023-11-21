@@ -4,8 +4,7 @@ from aiogram import types, Dispatcher
 from config import bot, ADMIN_ID
 from database.sql_commands import Database
 from keyboards.inline_buttons import questionnaire_keyboard, stats_keyboard
-from database import sql_commands
-from const import ALL_USERS, ALL_BAN_USERS
+
 
 
 async def start_questionnaire_call(call: types.CallbackQuery):
@@ -132,6 +131,25 @@ async def ban_list_users_stats(call: types.CallbackQuery):
         text=new_data
     )
 
+# async def complain_profiles(call: types.CallbackQuery):
+#     db = Database()
+#     await bot.send_message(
+#         chat_id=call.from_user.id,
+#         text='Send me user`s username or first name ✈️'
+#     )
+#     def users_data
+#     db_data = db.sql_select_user()
+
+async def delete_user_form(call: types.CallbackQuery):
+    db = Database()
+    db.sql_delete_user_form(telegram_id=call.from_user.id)
+    await call.message.delete()
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text='Your profile deleted'
+    )
+
+
 
 def register_callback_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(start_questionnaire_call,
@@ -150,3 +168,5 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "all list")
     dp.register_callback_query_handler(ban_list_users_stats,
                                        lambda call: call.data == "ban list")
+    dp.register_callback_query_handler(delete_user_form,
+                                       lambda call: call.data == "delete_profiles")

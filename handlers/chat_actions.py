@@ -90,7 +90,7 @@ async def chat_messages(message: types.Message):
                 # )
                 await bot.send_message(
                     chat_id=message.chat.id,
-                    text=f'User {message.from_user.first_name} can`t muted on 120sec.'
+                    text=f'User {message.from_user.first_name} muted on 120sec.'
                 )
             elif user:
                 db.sql_update_ban_user_count(

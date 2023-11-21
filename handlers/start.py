@@ -24,7 +24,6 @@ async def start_button(message: types.Message):
         )
     # else: if message.chat.id == -1002013774865:
 
-    print(message)
     # await bot.send_animation(
     #     chat_id=message.chat
     # )
