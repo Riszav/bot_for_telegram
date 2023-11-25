@@ -16,7 +16,7 @@ class Database:
         self.connection.execute(sql_queries.CREATE_ANSWERS_QUERY)
         self.connection.execute(sql_queries.CREATE_USER_FORM_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
-        self.connection.execute(sql_queries.CREATE_REFERRAL_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_REFERAL_TABLE_QUERY)
 
         try:
             self.connection.execute(sql_queries.ALTER_USER_TABLE)
@@ -32,8 +32,6 @@ class Database:
         )
         self.connection.commit()
 
-    def sql_create_answer_table(self):
-        self.cursor.execute(sql_queries.CREATE_ANSWERS_QUERY)
 
     def sql_insert_answer(self, username, users_phone):
         self.cursor.execute(
@@ -211,9 +209,18 @@ class Database:
         )
         self.connection.commit()
 
-    def sql_insert_referral(self, owner, referral):
+    def sql_insert_referral(self, owner, referral, first_name):
         self.cursor.execute(
             sql_queries.INSERT_REFERRAL_QUERY,
-            (None, owner, referral,)
+            (None, owner, referral, first_name)
         )
         self.connection.commit()
+
+    def sql_select_referals_by_owner_user(self, telegram_id):
+        self.cursor.row_factory = lambda cursor, row: {
+            "first_name": row[0]
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_REFERALS_BY_OWNER_USER,
+            (telegram_id,)
+        ).fetchone()
