@@ -9,3 +9,7 @@ USER_FORM_TEXT = "Nickname: {nickname}\n" \
                  "Gender: {gender}\n" \
                  "Age: {age}\n"
 
+REFERENCE_MENU_TEXT = "Hello {username}\n" \
+                      "Welcome to the Reference Menu\n\n" \
+                      "You have invited: {referral}\n" \
+                      "Your Balance: {balance}"
