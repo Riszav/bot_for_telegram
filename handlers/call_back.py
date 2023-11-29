@@ -3,7 +3,8 @@ import sqlite3
 from aiogram import types, Dispatcher
 from config import bot, ADMIN_ID
 from database.sql_commands import Database
-from keyboards.inline_buttons import questionnaire_keyboard, stats_keyboard
+from keyboards.inline_buttons import questionnaire_keyboard, stats_keyboard, save_anime_keyboard
+from scraping.scraper_file import AnimeScraper
 
 
 
@@ -149,7 +150,30 @@ async def delete_user_form(call: types.CallbackQuery):
         text='Your profile deleted'
     )
 
+async def scraper_call(call: types.CallbackQuery):
+    scraper = AnimeScraper()
+    data = scraper.parse_data()
+    id=0
+    newest = data[:5]
+    print(data)
+    for url in newest:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=f"Название: {url}",
+            reply_markup=await save_anime_keyboard()
+        )
+        id+=1
+    return newest
 
+async def save_call(call: types.CallbackQuery):
+    db = Database()
+    # news_id = int(call.data.split('_')[1]) - 1
+    # print(news_id)
+    db.sql_insert_favorite_anime(telegram_id=call.from_user.id,first_name=call.from_user.first_name, name_anime=None)
+    await bot.send_message(
+        chat_id = call.from_user.id,
+        text = 'Succsesfully'
+    )
 
 def register_callback_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(start_questionnaire_call,
@@ -170,3 +194,7 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "ban list")
     dp.register_callback_query_handler(delete_user_form,
                                        lambda call: call.data == "delete_profiles")
+    dp.register_callback_query_handler(scraper_call,
+                                       lambda call: call.data == "anime")
+    dp.register_callback_query_handler(save_call,
+                                       lambda call: call.data == "save")

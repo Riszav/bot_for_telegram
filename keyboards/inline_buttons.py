@@ -27,12 +27,17 @@ async def start_keyboard():
         "Reference Menu 🪲",
         callback_data="reference_menu"
     )
+    latest_anime_button = InlineKeyboardButton(
+        "Latest Anime 🪄",
+        callback_data="anime"
+    )
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(random_profiles_button)
     markup.add(complain_button)
     markup.add(reference_menu_button)
+    markup.add(latest_anime_button)
     return markup
 
 
@@ -115,4 +120,13 @@ async def reference_menu_keyboard():
     )
     markup.add(reference_button)
     markup.add(list_referal_button)
+    return markup
+
+async def save_anime_keyboard():
+    markup = InlineKeyboardMarkup()
+    save_button = InlineKeyboardButton(
+        "Save ⬇️",
+        callback_data="save"
+    )
+    markup.add(save_button)
     return markup

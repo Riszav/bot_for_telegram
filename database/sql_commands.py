@@ -17,6 +17,7 @@ class Database:
         self.connection.execute(sql_queries.CREATE_USER_FORM_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_REFERAL_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_FAVORITE_ANIME_TABLE_QUERY)
 
         try:
             self.connection.execute(sql_queries.ALTER_USER_TABLE)
@@ -223,4 +224,11 @@ class Database:
         return self.cursor.execute(
             sql_queries.SELECT_REFERALS_BY_OWNER_USER,
             (telegram_id,)
-        ).fetchone()
+        ).fetchall()
+
+    def sql_insert_favorite_anime(self, telegram_id, first_name, name_anime):
+        self.cursor.execute(
+            sql_queries.INSERT_FAVORITE_ANIME_QUERY,
+            (None, telegram_id, first_name, name_anime)
+        )
+        self.connection.commit()
