@@ -23,30 +23,17 @@ class AnimeScraper:
     # SERIES_XPATH = '//div[@class="custom-label1"]/text()'
 
     def parse_data(self):
-        i=0
-        list_anime=[]
+        i = 0
+        list_anime = []
         html = requests.get(url=self.MAIN_URL, headers=self.headers).text
-        # print(html)
         tree = Selector(text=html)
         links = tree.xpath(self.LINK_XPATH).extract()
         titles = tree.xpath(self.TITLE_XPATH).extract()
-        # list_anime.append({'title': title, 'link': link})
         for title in titles:
-            anime={title: links[i]}
-            # list_anime.append(title)
+            anime = {title: links[i]}
             list_anime.append(anime)
-            # print(list_anime)
-            i+=1
+            i += 1
         return list_anime
-
-
-            # for link in links:
-
-        # for link in links:
-        #     print(link)
-        # return links, titles
-        # for img in images:
-        #     print(img)
 
 
 if __name__ == "__main__":

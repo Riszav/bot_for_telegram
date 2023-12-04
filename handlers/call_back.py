@@ -5,6 +5,8 @@ from config import bot, ADMIN_ID
 from database.sql_commands import Database
 from keyboards.inline_buttons import questionnaire_keyboard, stats_keyboard, save_anime_keyboard
 from scraping.scraper_file import AnimeScraper
+from scraping.async_scrap import AsyncScraper
+import asyncio
 
 
 
@@ -150,7 +152,7 @@ async def delete_user_form(call: types.CallbackQuery):
         text='Your profile deleted'
     )
 
-async def scraper_call(call: types.CallbackQuery):
+async def scraper_anime_call(call: types.CallbackQuery):
     scraper = AnimeScraper()
     data = scraper.parse_data()
     id=0
@@ -164,6 +166,26 @@ async def scraper_call(call: types.CallbackQuery):
         )
         id+=1
     return newest
+
+async def scraper_films_call(call: types.CallbackQuery):
+    scraper = AsyncScraper()
+    data = asyncio.run(scraper.parse_pages())
+    id = 0
+    # newest = data[:5]
+    print(data)
+    # for url in data:
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text=f"{data}",
+        reply_markup=await save_anime_keyboard()
+    )
+    id += 1
+    # await bot.send_message(
+    #     chat_id=call.from_user.id,
+    #     text=f"Страница: {p}",
+    #     reply_markup=await save_anime_keyboard()
+    # )
+    return data
 
 async def save_call(call: types.CallbackQuery):
     db = Database()
@@ -194,7 +216,9 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "ban list")
     dp.register_callback_query_handler(delete_user_form,
                                        lambda call: call.data == "delete_profiles")
-    dp.register_callback_query_handler(scraper_call,
+    dp.register_callback_query_handler(scraper_anime_call,
                                        lambda call: call.data == "anime")
+    dp.register_callback_query_handler(scraper_films_call,
+                                       lambda call: call.data == "films")
     dp.register_callback_query_handler(save_call,
                                        lambda call: call.data == "save")
