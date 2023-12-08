@@ -4,10 +4,10 @@ from aiogram import types, Dispatcher
 from config import bot, ADMIN_ID
 from database.sql_commands import Database
 from keyboards.inline_buttons import questionnaire_keyboard, stats_keyboard, save_anime_keyboard
-from scraping.scraper_file import AnimeScraper
-from scraping.async_scrap import AsyncScraper
-from scraping.asyncc import AsyncNewsScraper
-import asyncio
+# from scraping.scraper_file import AnimeScraper
+# from scraping.async_scrap import AsyncScraper
+# from scraping.asyncc import AsyncNewsScraper
+# import asyncio
 
 
 
