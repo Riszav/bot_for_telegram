@@ -27,22 +27,22 @@ async def start_keyboard():
         "Reference Menu 🪲",
         callback_data="reference_menu"
     )
-    latest_anime_button = InlineKeyboardButton(
-        "Latest Anime 🪄",
-        callback_data="anime"
-    )
-    latest_film_button = InlineKeyboardButton(
-        "Latest Films 📽️",
-        callback_data="films"
-    )
+    # latest_anime_button = InlineKeyboardButton(
+    #     "Latest Anime 🪄",
+    #     callback_data="anime"
+    # )
+    # latest_film_button = InlineKeyboardButton(
+    #     "Latest Films 📽️",
+    #     callback_data="films"
+    # )
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(random_profiles_button)
     markup.add(complain_button)
     markup.add(reference_menu_button)
-    markup.add(latest_anime_button)
-    markup.add(latest_film_button)
+    # markup.add(latest_anime_button)
+    # markup.add(latest_film_button)
     return markup
 
 
